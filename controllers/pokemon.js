@@ -50959,11 +50959,4 @@ const pokemon = [
     }
 ];
 
-function getAll() {
-    return pokemonData;
-  }
-  
-  module.exports = {
-    getAll: getAll
-  };
 

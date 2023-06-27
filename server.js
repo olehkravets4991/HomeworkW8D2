@@ -77,6 +77,7 @@ const Pokemon = require('./controllers/pokemon');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 
 // Set the view engine to EJS
@@ -51065,13 +51066,25 @@ app.get('/pokemon', (req, res) => {
 });
 
 
+// // Show route - GET /pokemon/:id
+// app.get('/pokemon/:id', (req, res) => {
+//   const id = req.params.id;
+//   const pokemon = Pokemon.find(pokemon => pokemon.id == id);
+
+//   if (pokemon) {
+//     res.render('show.ejs', { pokemon });
+//   } else {
+//     res.send('Pokemon not found.');
+//   }
+// });
+
 // Show route - GET /pokemon/:id
 app.get('/pokemon/:id', (req, res) => {
   const id = req.params.id;
-  const pokemon = Pokemon.find(pokemon => pokemon.id == id);
+  const foundPokemon = pokemon.find(pokemon => pokemon.id === id);
 
-  if (pokemon) {
-    res.render('show.ejs', { pokemon });
+  if (foundPokemon) {
+    res.render('show.ejs', { pokemon: foundPokemon });
   } else {
     res.send('Pokemon not found.');
   }
