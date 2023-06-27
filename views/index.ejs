@@ -9,14 +9,16 @@
 <body>
     <h1>Pokedex</h1>
     <ul>
-        <% pokemon.forEach(function(pokemon) { %>
-            <li>
-                <a href="/pokemon/<%= pokemon.indexOf(pokemon) %>">
-                    <%= pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) %>
-                </a>
-            </li>
-        <% }) %>
-    </ul>
+        <% pokemon.forEach(pokemon => { %>
+          <li>
+            <a href="/pokemon/<%= pokemon.id %>">
+              <%= pokemon.name %>
+            </a>
+          </li>
+        <% }); %>
+      </ul>
+
+    <script src="/script.js"></script>
     
 </body>
 </html>
