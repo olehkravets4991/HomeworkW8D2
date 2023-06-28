@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>Create New Pokemon</title>
@@ -39,4 +39,46 @@
         <a href="/pokemon/delete">Delete Pokemon</a>
   </div>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Pokemon</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+<body>
+    <h1>New Pokemon</h1>
+
+    <form action="/pokemon" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="image">Image URL:</label>
+        <input type="text" id="image" name="image" required>
+
+        <label for="type">Type:</label>
+        <input type="text" id="type" name="type" required>
+
+        <label for="hp">HP:</label>
+        <input type="number" id="hp" name="hp" required>
+
+        <label for="attack">Attack:</label>
+        <input type="number" id="attack" name="attack" required>
+
+        <label for="defense">Defense:</label>
+        <input type="number" id="defense" name="defense" required>
+
+        <button type="submit">Save</button>
+    </form>
+
+    <div>
+        <a href="/pokemon">Back to Pokedex</a>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
 </html>
+

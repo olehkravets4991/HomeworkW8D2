@@ -50959,4 +50959,6 @@ let pokemon = [
     }
 ];
 
+
 module.exports=pokemon
+
