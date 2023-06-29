@@ -1,84 +1,21 @@
-// const express = require('express');
-// const app = express();
-// const Pokemon = require('./controllers/pokemon.js');
-
-// // Middleware
-// app.use(express.static('public'));
-
-// // Index route - GET /pokemon
-// app.get('/pokemon', (req, res) => {
-//     // Extract relevant data for the index page
-//     const pokemonList = Pokemon.map(pokemon => {
-//       return {
-//         id: pokemon.id,
-//         name: pokemon.name,
-//         image: pokemon.image,
-//       };
-//     });
-  
-//     res.render('index.ejs', { pokemonList });
-//   });
-  
-//   // Show route - GET /pokemon/:id
-//   app.get('/pokemon/:id', (req, res) => {
-//     const id = req.params.id;
-//     const pokemon = Pokemon.find(pokemon => pokemon.id == id);
-  
-//     if (pokemon) {
-//       res.render('show.ejs', { pokemon });
-//     } else {
-//       res.send('Pokemon not found.');
-//     }
-//   });
-
-// // New route - GET /pokemon/new
-// app.get('/pokemon/new', (req, res) => {
-//   res.render('new.ejs');
-// });
-
-// // Edit route - GET /pokemon/:id/edit
-// app.get('/pokemon/:id/edit', (req, res) => {
-//   const id = req.params.id;
-//   const pokemon = Pokemon[id];
-//   if (pokemon) {
-//     res.render('edit.ejs', { pokemon });
-//   } else {
-//     res.send('Pokemon not found.');
-//   }
-// });
-
-// // Create route - POST /pokemon
-// app.post('/pokemon', (req, res) => {
-//   // Logic to create a new Pokemon
-// });
-
-// // Update route - PUT /pokemon/:id
-// app.put('/pokemon/:id', (req, res) => {
-//   // Logic to update an existing Pokemon
-// });
-
-// // Destroy route - DELETE /pokemon/:id
-// app.delete('/pokemon/:id', (req, res) => {
-//   // Logic to delete a Pokemon
-// });
-
-// // Start the server
-// app.listen(3000, () => {
-//   console.log('Server started on port 3000');
-// });
-
-
+require("dotenv").config();
 const express = require('express');
+const morgan = require('morgan');
+const PORT = process.env.PORT;
 const app = express();
 const bodyParser = require('body-parser');
-const path = require('path'); // Add this line
+// const path = require('path'); // Add this line
+const methodOverride = require("method-override");
 
 const pokemon = require('./controllers/pokemon');
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.static('public'));
+app.use(morgan("dev"));
+app.use(methodOverride("_method"));
+// app.use("/pokemon")
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
@@ -99,9 +36,9 @@ app.get('/pokemon/new', (req, res) => {
 app.post('/pokemon', (req, res) => {
   const id = pokemon.length + 1;
   const name = req.body.name;
-  const image = req.body.image;
+  const img = req.body.image;
 
-  const newPokemon = { id, name, image };
+  const newPokemon = { id, name, img };
   pokemon.push(newPokemon);
 
   res.redirect('/pokemon');
@@ -110,10 +47,12 @@ app.post('/pokemon', (req, res) => {
 // Edit route - GET /pokemon/:id/edit
 app.get('/pokemon/:id/edit', (req, res) => {
   const id = req.params.id;
-  const pokemon = pokemon.find(pokemon => pokemon.id == id);
+  console.log(pokemon, id)
+  const pk = pokemon.find(poke => poke.id == id);
+ 
 
-  if (pokemon) {
-    res.render('edit.ejs', { pokemon });
+  if (pk) {
+    res.render('edit.ejs', { pokemon:pk });
   } else {
     res.send('Pokemon not found.');
   }
