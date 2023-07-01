@@ -61,11 +61,11 @@ app.get('/pokemon/:id/edit', (req, res) => {
 // Update route - PUT /pokemon/:id
 app.put('/pokemon/:id', (req, res) => {
   const id = req.params.id;
-  const pokemon = pokemon.find(pokemon => pokemon.id == id);
+  const pk = pokemon.find(poke => poke.id == id);
 
   if (pokemon) {
     pokemon.name = req.body.name;
-    pokemon.image = req.body.image;
+    pokemon.img = req.body.image;
 
     res.redirect(`/pokemon/${id}`);
   } else {
