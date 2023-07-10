@@ -6,6 +6,30 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .pokeChar a img {
+    height: 200px;
+    width: 200px;
+    border: 5px solid #3B4CCA;
+    border-radius: 5px;
+    box-shadow: 8px 8px rgb(23, 22, 22);
+}
+
+.pokeChar {
+    width:200px;
+    text-align:center;
+    display:block;
+    background-color: transparent;
+    border: 1px solid transparent;
+    margin-right: 10px;
+    margin-bottom: 1px;
+    float:left;
+    padding: 10px 0 10px 0;
+    font-size: 1.5rem; 
+}
+
+
+ 
   
   .container {
    
@@ -25,13 +49,20 @@ body {
     margin-bottom: 10px;
   }
   
-  ul {
+  /* ul {
     display: grid;
   grid-template-columns: repeat(3, 1fr);
     justify-content: space-around;
     list-style-type: none;
     padding: 0;
-  }
+  } */
+
+  .showImage img {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
   
   li {
     margin-bottom: 10px;
@@ -59,8 +90,8 @@ body {
   
   .card img {
     max-width: 100%;
-    height: 400px;
-    width: 400px;
+    height: 200px;
+    width: 200px;
     display: block;
     margin-bottom: 10px;
   }

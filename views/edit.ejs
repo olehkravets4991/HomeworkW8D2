@@ -3,33 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pokemon</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Pokedex</title>  
+    <%- include("./imports.ejs") %>
 </head>
-<body>
-    <h1>Edit Pokemon</h1>
 
-    <form action="/pokemon/<%= pokemon.id %>" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+<body class="showPage">
+    <h2>Edit <%= Pokemon.name %></h2>
+    <container class="seePokeDetails">
+        <div class="showPokemon">
+            <h1><%= Pokemon.name %></h1>
+        </div>
 
-        <label for="image">Image URL:</label>
-        <input type="text" id="image" name="image" required>
+        <div class="showImage">  
+            <img src="<%= Pokemon.img %>" alt="pokemon character"/>
+        </div>
 
-        <label for="type">Type:</label>
-        <input type="text" id="type" name="type" required>
+        <form action="/pokemon/<%= id %>?_method=PUT" method="post">
+            <h4>Name: <input type="text" name="name" placeholder="name of Pokemon" value="<%= Pokemon.name %>"/></h4>
+            <h4>Image: <input type="text" name="image" placeholder="name of Pokemon" value="<%= Pokemon.img %>"/></h4>
 
-        <label for="hp">HP:</label>
-        <input type="number" id="hp" name="hp" required>
+            <h2>Type:</h2>
+            <h4>Type: <input type="text" name="type" placeholder="type of Pokemon" value="<%= Pokemon.type %>"/></h4>
+              
 
-        <label for="attack">Attack:</label>
-        <input type="number" id="attack" name="attack" required>
-
-        <label for="defense">Defense:</label>
-        <input type="number" id="defense" name="defense" required>
-
-        <button type="submit">Update</button>
-    </form>
-    <script src="/script.js"></script>
+            <h2>Stats:</h2>
+                <h4>Attack: <input type="text" name="attack" placeholder="attack" value="<%= Pokemon.stats.attack %>"/></h4>
+                <h4>Hit Points: <input type="text" name="hp" placeholder="hp" value="<%= Pokemon.stats.hp %>"/></h4>
+                <h4>Defense: <input type="text" name="defense" placeholder="defense" value="<%= Pokemon.stats.defense %>"/></h4>
+                <h4>Speed: <input type="text" name="speed" placeholder="speed" value="<%= Pokemon.stats.speed %>"/></h4>
+                
+            <h2>Damages:</h2> 
+                <h4>Normal: <input type="text" name="normal" placeholder="normal" value="<%= Pokemon.damages.normal %>"/></h4>
+                <h4>Fire: <input type="text" name="fire" placeholder="fire" value="<%= Pokemon.damages.fire %>"/></h4>
+                <h4>Water: <input type="text" name="water" placeholder="water" value="<%= Pokemon.damages.water %>"/></h4>
+                <h4>Ice: <input type="text" name="ice" placeholder="ice" value="<%= Pokemon.damages.ice %>"/></h4>
+                    
+                <input type="submit" value="Edit <%= Pokemon.name %>" />
+        </form>
+    </container> 
 </body>
 </html>

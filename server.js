@@ -1,107 +1,104 @@
-require("dotenv").config();
-const express = require('express');
-const morgan = require('morgan');
+require("dotenv").config()
+const express = require("express");
+const morgan = require("morgan");
 const PORT = process.env.PORT;
 const app = express();
-const bodyParser = require('body-parser');
-// const path = require('path'); // Add this line
 const methodOverride = require("method-override");
+const pokemon = require("./models/pokemon.js");
 
-const pokemon = require('./controllers/pokemon');
+// MIDDLEWARE
+// PARSING URLENCODED
+app.use(morgan("dev"))
+app.use(express.static("public"))
+app.use(express.urlencoded({extended: false}))
+app.use(methodOverride("_method"))  
 
-// Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-app.use(express.static('public'));
-app.use(morgan("dev"));
-app.use(methodOverride("_method"));
-// app.use("/pokemon")
+// ROUTES
 
-// Set the view engine to EJS
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
-// Index route - GET /pokemon
+// INDEX - GET
 app.get('/pokemon', (req, res) => {
-    res.render('index.ejs', { pokemon: pokemon });
-  });
+    console.log(pokemon)
+        res.render('index.ejs', {pokemon});
 
-
-// New route - GET /pokemon/new
+    })
+    
+// NEW - GET 
 app.get('/pokemon/new', (req, res) => {
-  res.render('new.ejs');
-});
+    res.render('./new.ejs')
+})
 
-// Create route - POST /pokemon
-app.post('/pokemon', (req, res) => {
-  const id = pokemon.length + 1;
-  const name = req.body.name;
-  const img = req.body.image;
+// DESTROY - DELETE
+app.delete("/pokemon/:id", (req, res) => {
+    const id = req.params.id
+    pokemon.splice(id, 1)
+    res.redirect("/pokemon")
+})
 
-  const newPokemon = { id, name, img };
-  pokemon.push(newPokemon);
+// UPDATE - PUT
+app.put("/pokemon/:id", (req, res) => {
+    const id = req.params.id;
+    pokemon[id] = { 
+        name: req.body.name,
+        img: req.body.image,
+        type: [
+            req.body.type
+        ],
+        stats: {
+            attack: req.body.attack,
+            hp: req.body.hp,
+            defense: req.body.defense,
+            speed: req.body.speed
+        },
+        damages: {
+            normal: req.body.normal,
+            fire: req.body.fire,
+            water: req.body.water,
+            ice: req.body.ice
+        }
+    }
+    res.redirect("/pokemon")
+})
 
-  res.redirect('/pokemon');
-});
+// CREATE - POST 
+app.post('/pokemon/', (req, res) => { 
+    let newPokemon = {
+        name: req.body.name,
+        img: req.body.image,
+        type: [
+            req.body.type
+        ],
+        stats: {
+            attack: req.body.attack,
+            hp: req.body.hp,
+            defense: req.body.defense,
+            speed: req.body.speed
+        },
+        damages: {
+            normal: req.body.normal,
+            fire: req.body.fire,
+            water: req.body.water,
+            ice: req.body.ice
+        }
+    }
+    pokemon.push(newPokemon)
 
-// Edit route - GET /pokemon/:id/edit
-app.get('/pokemon/:id/edit', (req, res) => {
-  const id = req.params.id;
-  console.log(pokemon, id)
-  const pk = pokemon.find(poke => poke.id == id);
- 
+    res.redirect('/pokemon')
+})
 
-  if (pk) {
-    res.render('edit.ejs', { pokemon:pk });
-  } else {
-    res.send('Pokemon not found.');
-  }
-});
+// EDIT - GET
+app.get("/pokemon/:id/edit", (req, res) => {
+    const id = req.params.id;
+    const Pokemon = pokemon[id];
+    res.render("edit.ejs", {Pokemon, id});
+}) 
 
-// Update route - PUT /pokemon/:id
-app.put('/pokemon/:id', (req, res) => {
-  const id = req.params.id;
-  const pk = pokemon.find(poke => poke.id == id);
-
-  if (pokemon) {
-    pokemon.name = req.body.name;
-    pokemon.img = req.body.image;
-
-    res.redirect(`/pokemon/${id}`);
-  } else {
-    res.send('Pokemon not found.');
-  }
-});
-
-// Destroy route - DELETE /pokemon/:id
-app.delete('/pokemon/:id', (req, res) => {
-  const id = req.params.id;
-  const pokemonIndex = pokemon.findIndex(pokemon => pokemon.id == id);
-
-  if (pokemonIndex !== -1) {
-    pokemon.splice(pokemonIndex, 1);
-  
-
-  res.redirect('/pokemon');
-
-} else {
-    res.send('Pokemon not found.');
-  }
-});
-
-// Show route - GET /pokemon/:id
+// SHOW
 app.get('/pokemon/:id', (req, res) => {
     const id = req.params.id;
-    const foundPokemon = pokemon.find(pokemon => pokemon.id === id);
-  
-    if (foundPokemon) {
-      res.render('show.ejs', { pokemon: foundPokemon });
-    } else {
-      res.send('Pokemon not found.');
-    }
-  });
-
-// Start the server
-app.listen(3000, () => {
-  console.log('Server started on port 3000');
+    const Pokemon = pokemon[id];
+    res.render('show.ejs', {Pokemon, id});
 });
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+})

@@ -4,116 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <%- include("./imports.ejs") %>
+    
 </head>
 <body>
-    <h1>Pokemon</h1>
-    <h2><%= pokemon.name %></h2>
-    <img src="<%= pokemon.img %>" alt="<%= pokemon.name %>">
+    <container class="seePokeDetails">
+        <div class="showPokemon">
+            <h1><%= Pokemon.name %></h1>
+        </div>
+        <div class="showImage">  
+            <img src="<%= Pokemon.img %>" alt="pokemon character"/>
+        </div>
 
-    <h3>Type:</h3>
-    <ul>
-        <% pokemon.type.forEach(type => { %>
-            <li><%= type %></li>
-        <% }); %>
-    </ul>
+        <div class="pokemonDetails">
+                <ul>  
+                    <h2>Type:</h2>      
+                    <% for(let i=0; i<Pokemon.type.length; i++) { %>
+                        <li><h4><%= Pokemon.type[i] %></h4></li>
+                    <% } %>
+                </ul>
+        </div>
 
-    <h3>Stats:</h3>
-    <ul>
-        <li>HP: <%= pokemon.stats.hp %></li>
-        <li>Attack: <%= pokemon.stats.attack %></li>
-        <li>Defense: <%= pokemon.stats.defense %></li>
-        <li>Special Attack: <%= pokemon.stats.spattack %></li>
-        <li>Special Defense: <%= pokemon.stats.spdefense %></li>
-        <li>Speed: <%= pokemon.stats.speed %></li>
-    </ul>
+        <div class="stats">
+            <h2>Stats:</h2>
+                <ul>
+                    <li><h4>Attack: <%= Pokemon.stats.attack %></h4></li>
+                    <li><h4>Hit Points: <%= Pokemon.stats.hp %></h4></li>
+                    <li><h4>Defense: <%= Pokemon.stats.defense %></h4></li>
+                    <li><h4>Speed: <%= Pokemon.stats.speed %></h4></li>
+                </ul>
+        </div>
 
-    <h3>Moves:</h3>
-    <h4>Level Moves:</h4>
-    <ul>
-        <% pokemon.moves.level.forEach(move => { %>
-            <li><%= move.learnedat %> - <%= move.name %> (Gen <%= move.gen %>)</li>
-        <% }); %>
-    </ul>
+        <div class="damages">
+            <h2>Damages:</h2> 
+                <ul>
+                    <li><h4>Normal: <%= Pokemon.damages.normal %></h4></li>
+                    <li><h4>Fire: <%= Pokemon.damages.fire %></h4></li>  
+                    <li><h4>Water: <%= Pokemon.damages.water %></h4></li> 
+                    <li><h4>Ice: <%= Pokemon.damages.ice %></h4></li> 
+                </ul>
+        </div>    
+        
+        <div class="controls">
+            <a href="/pokemon/<%= id %>/edit"><button> Edit the Pokemon</button></a>
 
-    <h4>TM/HM Moves:</h4>
-    <ul>
-        <% pokemon.moves.tmhm.forEach(move => { %>
-            <li><%= move.learnedat %> - <%= move.name %> (Gen <%= move.gen %>)</li>
-        <% }); %>
-    </ul>
+            <form action="/pokemon/<%= id %>?_method=DELETE" method="POST">
+                <input type="submit" value="DELETE"/>
+            </form>
 
-    <h4>Egg Moves:</h4>
-    <ul>
-        <% pokemon.moves.egg.forEach(move => { %>
-            <li><%= move.name %> (Gen <%= move.gen %>)</li>
-        <% }); %>
-    </ul>
+            <h3>
+                <a href="/pokemon/">Return Back To Main Page</a>
+            </h3>
+        </div>    
+        
+    </container> 
 
-    <h4>Tutor Moves:</h4>
-    <ul>
-        <% pokemon.moves.tutor.forEach(move => { %>
-            <li><%= move.name %> (Gen <%= move.gen %>)</li>
-        <% }); %>
-    </ul>
-
-    <h4>Gen IV Moves:</h4>
-    <ul>
-        <% pokemon.moves.gen34.forEach(move => { %>
-            <li><%= move.name %> (Method: <%= move.method %>)</li>
-        <% }); %>
-    </ul>
-
-    <h3>Damage Multipliers:</h3>
-    <ul>
-        <li>Normal: <%= pokemon.damages.normal %></li>
-        <li>Fire: <%= pokemon.damages.fire %></li>
-        <li>Water: <%= pokemon.damages.water %></li>
-        <li>Electric: <%= pokemon.damages.electric %></li>
-        <li>Grass: <%= pokemon.damages.grass %></li>
-        <li>Ice: <%= pokemon.damages.ice %></li>
-        <li>Fighting: <%= pokemon.damages.fight %></li>
-        <li>Poison: <%= pokemon.damages.poison %></li>
-        <li>Ground: <%= pokemon.damages.ground %></li>
-        <li>Flying: <%= pokemon.damages.flying %></li>
-        <li>Psychic: <%= pokemon.damages.psychic %></li>
-        <li>Bug: <%= pokemon.damages.bug %></li>
-        <li>Rock: <%= pokemon.damages.rock %></li>
-        <li>Ghost: <%= pokemon.damages.ghost %></li>
-        <li>Dragon: <%= pokemon.damages.dragon %></li>
-        <li>Dark: <%= pokemon.damages.dark %></li>
-        <li>Steel: <%= pokemon.damages.steel %></li>
-    </ul>
-
-    <h3>Miscellaneous:</h3>
-    <ul>
-        <li>Sex:</li>
-        <ul>
-            <li>Male: <%= pokemon.misc.sex.male %>%</li>
-            <li>Female: <%= pokemon.misc.sex.female %>%</li>
-        </ul>
-        <li>Abilities:</li>
-        <ul>
-            <li>Normal: <%= pokemon.misc.abilities.normal.join(', ') %></li>
-            <li>Hidden: <%= pokemon.misc.abilities.hidden.join(', ') %></li>
-        </ul>
-        <li>Classification: <%= pokemon.misc.classification %></li>
-        <li>Height: <%= pokemon.misc.height %></li>
-        <li>Weight: <%= pokemon.misc.weight %></li>
-        <li>Capture Rate: <%= pokemon.misc.capturerate %></li>
-        <li>Egg Steps: <%= pokemon.misc.eggsteps %></li>
-        <li>Experience Growth: <%= pokemon.misc.expgrowth %></li>
-        <li>Happiness: <%= pokemon.misc.happiness %></li>
-        <li>Effort Values (EVs):</li>
-        <ul>
-            <% pokemon.misc.evpoints.forEach(ev => { %>
-                <li><%= ev %></li>
-            <% }); %>
-        </ul>
-        <li>Flee Flag: <%= pokemon.misc.fleeflag %></li>
-        <li>Entry Forest Level: <%= pokemon.misc.entreeforestlevel %></li>
-    </ul>
-
-    <a href="/pokemon">Back</a>
 </body>
 </html>

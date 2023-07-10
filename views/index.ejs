@@ -4,33 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <%- include("./imports.ejs") %>
 </head>
 <body>
-    <h1>Pokedex</h1>
+    <container class="seePokemon">
+        <div class="pageTitle">
+            <h1>Pokedex</h1>
+        <!-- </div>
+            
 
-    <a href="/pokemon/new">Add New Pokemon</a>
-
-    
-    <ul>
-        <% pokemon.forEach(pokemon => { %>
-          <li>
-            <a href="/pokemon/<%= pokemon.id %>">
-              <%= pokemon.name %>
-            </a>
-            <img src="<%= pokemon.img %>" alt="<%= pokemon.name %>">
-            <div>
-              <a href="/pokemon/<%= pokemon.id %>/edit">Edit</a>
-              <form action="/pokemon/<%= pokemon.id %>?_method=DELETE" method="POST">
-                <button type="submit">Delete</button>
-              </form>
+        <div class="addNew"> -->
+            <a href="/pokemon/new"><button> Add a New Pokemon</button></a>
+        </div>
+            <div class="pokes">
+                <% for(let i = 0; i < pokemon.length; i++) { %> 
+                    <div class="pokeChar">
+                        <a href="/pokemon/<%= i %>"><img src=" <%= pokemon[i].img %>"></a>
+                
+                        <a href="/pokemon/<%= i %>"><%= pokemon[i].name %></a>    
+                    </div>
+                <% } %>               
             </div>
-          </li>
-        <% }); %>
-    </ul>
-
-    
-
-    <script src="/script.js"></script>
+        
+    </container>
 </body>
 </html>

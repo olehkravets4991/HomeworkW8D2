@@ -1,84 +1,36 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-  <title>Create New Pokemon</title>
-  <style>
-    body {
-      background-color: beige;
-    }
-   
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Create New Pokemon</h1>
-
-    <form action="/pokemon" method="POST">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required>
-
-      <label for="image">Image URL:</label>
-      <input type="text" id="image" name="image" required>
-
-      <label for="type">Type:</label>
-      <input type="text" id="type" name="type" required>
-
-      <label for="hp">HP:</label>
-      <input type="number" id="hp" name="hp" required>
-
-      <label for="attack">Attack:</label>
-      <input type="number" id="attack" name="attack" required>
-
-      <label for="defense">Defense:</label>
-      <input type="number" id="defense" name="defense" required>
-
-      <button type="submit">Create new Pokemon</button>
-  </form>
-        <a href="/pokemon">Back to Pokedex</a>
-        <a href="/pokemon/edit">Edit Pokemon</a>
-        <a href="/pokemon/delete">Delete Pokemon</a>
-  </div>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Pokemon</title>
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <title>Pokedex</title>
+    <%- include("./imports.ejs") %>
 </head>
 <body>
-    <h1>New Pokemon</h1>
 
-    <form action="/pokemon" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+    <h2>Add a New Pokemon</h2>
+    <ul>
+        <form action="/pokemon" method="post">
+            
+            <h4>Name: <input type="text" name="name"placeholder="name of Pokemon"></h4>
+            <h4>Type: <input type="text" name="type" placeholder="type of Pokemon"></h4> 
+            <h4>Add Image: <input type="url" accept="image/*"></h4>
 
-        <label for="image">Image URL:</label>
-        <input type="text" id="image" name="image" required>
+            <h2>Stats:</h2> 
+            <h4>Attack: <input type="text" name="attack"></h4>
+            <h4>HP: <input type="text" name="hp"></h4>
+            <h4>Defense: <input type="text" name="defense"></h4>
+            <h4>Speed: <input type="text" name="speed"></h4>
 
-        <label for="type">Type:</label>
-        <input type="text" id="type" name="type" required>
+            <h2>Damages:</h2> 
+            <h4>Normal: <input type="text" name="normal"></h4>
+            <h4>Fire: <input type="text" name="fire"></h4>
+            <h4>Water: <input type="text" name="water"></h4>
+            <h4>Ice: <input type="text" name="ice"></h4>
 
-        <label for="hp">HP:</label>
-        <input type="number" id="hp" name="hp" required>
 
-        <label for="attack">Attack:</label>
-        <input type="number" id="attack" name="attack" required>
-
-        <label for="defense">Defense:</label>
-        <input type="number" id="defense" name="defense" required>
-
-        <button type="submit">Save</button>
-    </form>
-
-    <div>
-        <a href="/pokemon">Back to Pokedex</a>
-    </div>
-
-    <script src="/script.js"></script>
+            <input type="submit" value="Add Pokemon" />
+        </form>
+    </ul>
 </body>
 </html>
-
